@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+
+        <title> Coop Pal - Home </title>
+        <link rel = "icon" href="Graphics/Logo.png" type="image/png">
+
+        <!-- CSS design -->
+        <style>  
+            body { 
+                font-family: Arial, Helvetica, sans-serif; 
+                justify-content: center; 
+                align-items: center; 
+                background-color: #702c2c;
+            }
+            /* 'Coop Pal' logo and title */
+            .logo {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50px;
+                height: auto;
+            }
+            .title {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 100px;
+                height: auto;
+            }
+
+            /* 'Monitoring' and 'Tools' container */
+            .dashboard { 
+                background-color: #bf3131; 
+                color: white; 
+                padding: 20px; 
+                border-radius: 15px; 
+                width: 86%; 
+                margin-left: auto;
+                margin-right: auto;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+            .status_box_grid {
+                display: grid;
+                gap: 10px;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* 'Egg' card */
+            .dashboard .egg_status { 
+                background-color: #faf7f0; 
+                color: black; 
+                padding: 10px; 
+                border-radius: 5px; 
+                margin-bottom: 10px; 
+                display: flex; 
+                justify-content: space-between; 
+                align-items: center; 
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+            .dashboard .egg_status h2 { 
+                position: relative; 
+                bottom: 0; 
+                left: 0; 
+                margin: 0; 
+                padding: 10px;
+            }
+            .dashboard .egg_status .egg_logo {
+                width: 35px;
+                height: auto;
+                padding: 10px;
+            }
+
+            /* Side-by-side cards */
+            .dashboard .status_box { 
+                flex: 1; 
+                background-color: #faf7f0; 
+                color: black; 
+                padding: 10px; 
+                border-radius: 5px; 
+                margin-bottom: 10px; 
+                display: flex; 
+                justify-content: space-between; 
+                align-items: center;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+            .dashboard .status-info { 
+                display: flex;
+                flex-direction: column;
+                gap: 1px;
+            }
+            .dashboard .status-logo {
+                width: 40px;
+                height: auto;
+                padding: 10px;
+            }
+
+            /* 'View' button on 'Camera' card */
+            .button {
+                background-color: #b2b2b2;
+                color: black;
+                padding: 0.5em 1em;
+                border-radius: 1.5em;
+                border: none;
+                font-size: 1em; 
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                transition: background-color 0.3s ease, transform 0.2s ease; 
+            }
+            .button:hover {
+                background-color: #bbb;
+            }
+            /* Media Queries for Responsiveness */
+            @media (max-width: 768px) {
+                .button {
+                    padding: 0.4em 0.8em;
+                    font-size: 1em;
+                }
+            }
+            @media (max-width: 480px) {
+                .button {
+                    padding: 0.3em 0.6em;
+                    font-size: 0.95em;
+                }
+            }
+
+            /* Toggle button for 'Tools' cards */
+            .switch {
+              position: relative;
+              display: inline-block;
+              width: 60px;
+              height: 34px;
+            }
+            .switch input {
+              opacity: 0;
+              width: 0;
+              height: 0;
+            }
+            .slider {
+              position: absolute;
+              cursor: pointer;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: #b2b2b2;
+              -webkit-transition: .4s;
+              transition: .4s;
+              border-radius: 34px;
+            }
+            .switch input:disabled + .slider {
+              opacity: 0.25;
+              pointer-events: none;
+              cursor: not-allowed;
+            }
+            .slider:before {
+              position: absolute;
+              content: "";
+              height: 26px;
+              width: 26px;
+              left: 4px;
+              bottom: 4px;
+              background-color: white;
+              -webkit-transition: .4s;
+              transition: .4s;
+              border-radius: 50%;
+            }
+            input:checked + .slider {
+              background-color: #00d54f;
+            }                      
+            input:checked + .slider:before {
+              -webkit-transform: translateX(26px);
+              -ms-transform: translateX(26px);
+              transform: translateX(26px);
+            }
+            
+            /* Bottom navigation bar */
+            .bottom-nav {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #bf3131;
+                display: grid;
+                place-items: center;
+                grid-auto-flow: column; 
+                gap: 2px;     
+                padding: 0px 0px;
+                border-radius: 50px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                z-index: 3;
+                width: 93%;
+            }
+            /* Unselected button icon */
+            .nav-button {
+                background-color: #bf3131;
+                padding: 10px;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                outline: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 8px;
+            }
+            /* Selected button icon */
+            .nav-button.center {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #faf7f0;
+                width: 70px;
+                height: 60px;
+                border-radius: 45%;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            /* Divider line between buttons */
+            .divider {
+                width: 1px;
+                height: 24px;
+                background-color: #faf7f0;
+                margin: 0 5px;
+            }
+
+            /* 'Auto/Manual' button */
+            .toggle-btn-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 90%;
+                margin: 10px auto; 
+            }
+            .toggle-btn {
+                position: relative;
+                display: inline-flex;
+                width: 100%;
+                height: 3em;
+                border-radius: 2em;
+                background-color: #b2b2b2;
+                overflow: hidden;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+            .toggle-btn input {
+                display: none;
+            }
+            .toggle-btn .option {
+                position: relative;
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 1em;
+                font-weight: bold;
+                color: #ffffff;
+                z-index: 1;
+                cursor: pointer;
+                user-select: none;
+                transition: color 0.3s ease;
+            }
+            .toggle-btn .slider-auto {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 50%;
+                height: 100%;
+                background-color: #702c2c;
+                border-radius: 2em;
+                transition: left 0.3s ease;
+                z-index: 0;
+            }
+            #manual:checked ~ .slider-auto {
+                left: 50%;
+            }
+            /* Tools auto spacing */
+            .tools-auto {
+                text-align: center;
+                display: flex;
+                gap: 1em;
+            }
+            /* Media Queries for Responsiveness */
+            @media (max-width: 768px) {
+                .toggle-btn {
+                    height: 2.5em; /* Smaller button */
+                }
+                .toggle-btn .option {
+                    font-size: 0.9em; /* Smaller text */
+                }
+                .toggle-btn-container {
+                    width: 100%; /* Use full width on small screens */
+                }
+            }
+            @media (max-width: 480px) {
+                .toggle-btn {
+                    height: 2em; /* Even smaller button */
+                }
+
+                .toggle-btn .option {
+                    font-size: 0.8em; /* Adjust text size */
+                }
+            }
+
+            /* Pop-up window */
+            .popup {
+                background-color: #faf7f0;
+                padding: 20px;
+                text-align: center;
+                border-radius: 15px; 
+                width: 80%; 
+                margin-left: auto;
+                margin-right: auto;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                opacity: 0.75;
+            }
+            .popup h2 {
+                margin-top: 0;
+                color: #bf3131;
+            }
+            /* Blurred background during pop-up */
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(5px);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+
+            /* 'Tools' more info button */
+            .image-button {
+                display: flex;
+                position: relative;
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                outline: none;
+                background-color: #bf3131;
+                width: 20%;
+                height: 20%;
+                top: 25px;
+                border-radius: 50%;
+            }
+            .image-button img {
+                display: block;
+                max-width: 100%;
+                transition: transform 0.2s ease;
+                background-color: #bf3131;
+                border-radius: 50%;
+                padding: 0;
+            }
+            .image-button:hover img {
+                transform: scale(1.05);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            }
+
+            /* 'Close' button */
+            .close {
+                background-color: gray;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 10px;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+            .close:hover {
+                background-color: #545454;
+            }
+
+            /* 'Detect' button */
+            .detect {
+                background-color: #702c2c;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 10px;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                width: 150px;
+            }
+            .detect:hover {
+                background-color: white;
+                color: #702c2c;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- 'Coop Pal' logo and title -->
+        <br> <img src = "Graphics/Logo.png" alt = "Coop Pal Logo" class = "logo">
+        <img src = "Graphics/Title - White.png" alt = "Coop Pal Title" class = "title">
+        <br> <br>
+
+        <!-- 'Monitoring' container -->
+        <div class = "dashboard">
+            <h1> Monitoring </h1>
+
+            <!-- 'Egg' card -->
+            <div class = "egg_status">
+                <div class = "status-info">
+                    <h2> Egg Detection AI </h2>
+                    <button class = "detect" onclick = "window.location.href = 'Detect Eggs.html'"> Go </button>
+                </div>
+                <img src = "Graphics/Status - Egg.png" alt = "Egg" class = "egg_logo">
+            </div>
+
+            <!-- Side-by-side cards -->
+            <div class = "status_box_grid">
+                <!-- 'Temperature' card -->
+                <div class = "status_box">
+                    <div class = "status-info">
+                        <p id = "temp"> Temperature </p>
+                        <b id = "temp-desc" style = "font-size: 20px;"> Error </b> 
+                    </div>
+                    <div class = "status-info">
+                        <img src = "Graphics/Status - Temperature.png" alt = "Thermometer" class = "status-logo">
+                    </div>
+                </div>
+
+                <!-- 'Humidity' card -->
+                <div class = "status_box">
+                    <div class = "status-info">
+                        <p id = "humid"> Humidity </p>
+                        <b id = "humid-desc" style = "font-size: 20px;"> Error </b> 
+                    </div>
+                    <div class = "status-info">
+                        <img src = "Graphics/Status - Humidity.png" alt = "Humidity" class = "status-logo">
+                    </div>
+                </div>
+
+                <!-- 'Daylight' card -->
+                <div class = "status_box">
+                    <div class = "status-info">
+                        <p> ‎ </p>
+                        <b style = "font-size: 20px;" id = "light-desc"> Error </b> 
+                    </div>
+                    <div class = "status-info">
+                        <img src = "Graphics/Status - Daylight.png" id = "light_img" alt = "Daylight" class = "status-logo">
+                    </div>
+                </div>
+
+                <!-- 'Air Quality' card -->
+                <div class = "status_box">
+                    <div class = "status-info">
+                        <p id = "air"> Air </p>
+                        <b id = "air-desc" style = "font-size: 20px;"> Error </b> 
+                    </div>
+                    <div class = "status-info">
+                        <img src = "Graphics/Status - Air.jpg" alt = "Air Quality" class = "status-logo">
+                    </div>
+                </div>
+
+                <!-- 'Water' card -->
+                <div class = "status_box">
+                    <div class = "status-info">
+                        <p id = "water"> Water </p>
+                        <b style = "font-size: 20px;" id = "water-desc"> Error </b> 
+                    </div>
+                    <div class = "status-info">
+                        <img src = "Graphics/Status - Water.png" alt = "Water" class = "status-logo">
+                    </div>
+                </div>
+
+                <!-- 'Feeds' card -->
+                <div class = "status_box">
+                    <div class = "status-info">
+                        <p id = "feeds"> Feeds </p>
+                        <b style = "font-size: 20px;" id = "feeds-desc"> Error </b> 
+                    </div>
+                    <div class = "status-info">
+                        <img src = "Graphics/Status - Feed.png" alt = "Chicken Feed" class = "status-logo">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <br>
+
+        <!-- 'Tools' container -->
+        <div class = "dashboard">
+            <div class = "tools-auto">
+                <h1> Tools </h1>
+
+                <!-- 'Auto/Manual' button -->
+                <div class = "toggle-btn-container">
+                    <div class = "toggle-btn">
+                        <input type = "radio" id = "auto" name = "toggle" checked>
+                        <label for = "auto" class = "option auto"> Auto </label>
+                        <input type = "radio" id = "manual" name = "toggle">
+                        <label for = "manual" class = "option manual"> Manual </label>
+                        <span class = "slider-auto"> </span>
+                    </div>
+                </div>
+
+                <!-- Additional information -->
+                <button class = "image-button" onclick = "openPopupInfo()">
+                    <img src = "Graphics/Navigation Bar/Info - White.png" alt = "More information">
+                </button>
+            </div>
+            <!-- Pop-up -->
+            <div class = "overlay" id = "overlay-info" style = "display: none;">
+                <div class = "popup">
+                    <!-- Content -->
+                    <br>
+                    <h2> Auto Mode </h2>
+                    <p style = "color: black;">
+                        The system <b> automatically controls </b> the actuators (fan and LED bulb) whenever the 
+                        environmental parameters (temperature, light, and humidity) are not in the optimal range.
+                    </p>
+                    <br>
+                    <h2> Manual Mode </h2>
+                    <p style = "color: black;">
+                        The user will have <b> full control </b> of the actuators (fan and LED bulb) but the system will not automatically respond
+                        to the environmental parameters (temperature, light, and humidity) when out of the optimal range.
+                    </p>
+                    <br>
+                    <button class = "close" onclick = "closePopupInfo()"> Close </button>
+                </div>
+            </div>
+            <script>
+                function openPopupInfo() {
+                    document.getElementById("overlay-info").style.display = "flex";
+                }
+                function closePopupInfo() {
+                    document.getElementById("overlay-info").style.display = "none";
+                }
+            </script>
+            
+            <!-- 'Camera' card -->
+            <div class = "egg_status">
+                <div class = "status-info">
+                    <b> Camera </b> 
+                    <button class = "button" onclick = "window.location.href = 'Camera.html'"> <b> View </b> </button>
+                </div>
+                <div class = "status-logo">
+                    <img src = "Graphics/Tools - Camera.png" alt = "Surveillance Camera" class = "status-logo">
+                </div>
+            </div>
+
+            <!-- 'Fan' and 'LED Bulb' cards -->
+            <div class = "status_box_grid">
+                <!-- 'Fan' -->
+                <div class = "status_box">
+                    <div class = "status-info">
+                        <b> Fan </b>
+                        <!-- Toggle switch -->
+                        <label class = "switch">
+                            <input type = "checkbox" id = "fan-toggle">
+                            <span class = "slider"></span>
+                        </label>
+                    </div>
+                    <div class = "status-logo">
+                        <img src = "Graphics/Tools - Fan.png" alt = "Fan" class = "status-logo">
+                    </div>
+                </div>
+
+                <!-- 'LED Bulb' -->
+                <div class = "status_box">
+                    <div class = "status-info">
+                        <b> LED Bulb </b>
+                        <!-- Toggle switch -->
+                        <label class = "switch">
+                            <input type = "checkbox" id = "led-toggle">
+                            <span class = "slider"></span>
+                        </label>
+                    </div>
+                    <div class = "status-logo">
+                        <img src = "Graphics/Tools - LED.png" alt = "Lightbulb" class = "status-logo">
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+        <br> <br> <br> <br> <br> <br>
+
+        <!-- Navigation Bar -->
+        <div class = "bottom-nav">
+            <button class = "nav-button" onclick = "window.location.href = 'Info Page.html'">
+                <img src = "Graphics/Navigation Bar/Info - White.png" alt = "More Information" class = "status-logo" width = "60px">
+            </button>
+            <div class = "divider"></div>
+            <button class = "nav-button center" onclick = "window.location.href = 'index.html'">
+                <img src = "Graphics/Navigation Bar/Home - Black.png" alt = "Home" class = "status-logo" width = "60px">
+            </button>
+            <div class = "divider"></div>
+            <button class = "nav-button" onclick = "window.location.href = 'Settings.html'">
+                <img src = "Graphics/Navigation Bar/Settings - White.png" alt = "Settings" class = "status-logo" width = "60px">
+            </button>
+        </div>
+
+        <script>
+            // Auto-refresh the page every 3 minutes (180,000 milliseconds)
+            setTimeout(() => {
+                window.location.reload();
+            }, 180000);
+
+            // Update 'Monitoring' sensor data
+            async function updateSensor() {
+                try {
+                    const response = await fetch('http://192.168.100.10/coop_pal/fetch_sensor_data.php');
+                    const data = await response.json();
+
+                    const response_t = await fetch('http://192.168.100.10/coop_pal/get_thresholds.php');
+                    const threshold = await response_t.json();
+
+                    // Update statuses
+                    document.getElementById('temp-desc').textContent = data.temperature + " °C";
+                    document.getElementById('humid-desc').textContent = data.humidity + "%";
+                    // document.getElementById('daylight').textContent = data.light + " V";
+
+                    const response_w = await fetch('http://192.168.100.10/coop_pal/get_water_weight.php');
+                    const data_w = await response_w.json();
+
+                    // Update temperature descriptions
+                    let temp = Number(data.temperature);
+                    if (temp < threshold.min_temp) {
+                        document.getElementById('temp-desc').style.color = "#bf3131";
+                    }
+                    else if (temp >= threshold.min_temp && temp <= threshold.max_temp) {
+                        document.getElementById('temp-desc').style.color = "black";
+                    }
+                    else if (temp > threshold.max_temp) {
+                        document.getElementById('temp-desc').style.color = "#bf3131";
+                    }
+
+                    let hum = Number(data.humidity);
+                    // Update humidity descriptions
+                    if (hum <= threshold.min_humid) {
+                        document.getElementById('humid-desc').style.color = "#bf3131";
+                    }
+                    else if (hum >= threshold.min_humid && hum <= threshold.max_humid) {
+                        document.getElementById('humid-desc').style.color = "black";
+                    }
+                    else if (hum >= threshold.max_humid) {
+                        document.getElementById('humid-desc').style.color = "#bf3131";
+                    }
+                
+                    let light_volt = Number(data.light);
+                    // Update light descriptions
+                    light_threshold = threshold.min_light_volts;
+                    if (light_volt < light_threshold) {
+                        document.getElementById('light-desc').textContent = "Night";
+                        document.getElementById('light_img').src = "Graphics/Status - Night.png";
+                        document.getElementById('light_img').class = "status-logo";
+                    }
+                    else if (light_volt >= light_threshold) {
+                        document.getElementById('light-desc').textContent = "Day";
+                        document.getElementById('light_img').src = "Graphics/Status - Daylight.png";
+                        document.getElementById('light_img').class = "status-logo";
+                    }
+                
+                    // Update air quality
+                    const response_a = await fetch('http://192.168.100.10/coop_pal/get_scan_history_no_date.php');
+                    const scan = await response_a.json();
+
+                    let air_v = (scan.data.air_quality/1024) * 5;
+
+                    // document.getElementById("air").textContent = air_v.toFixed(5) + " V";
+
+                    // Compare combined data to threshold
+                    if (scan.data.air_quality <= threshold.pollution_norm) {
+                        document.getElementById('air-desc').textContent = "Good";
+                        document.getElementById('air-desc').style.color = "black";
+                    }
+                    else {
+                        document.getElementById('air-desc').textContent = "Bad";
+                        document.getElementById('air-desc').style.color = "#bf3131";
+                    }
+                    
+                    // Update container descriptions
+                    // Determine full weight; Needs calibration
+                    water_full = threshold.max_water;
+                    feeds_full = threshold.max_water;
+                    // Compare current weight to thresholds
+                    if (data.water_weight >= water_full * 0.75) {
+                        document.getElementById('water-desc').textContent = "Full";
+                        document.getElementById('water-desc').style.color = "black";
+                    }
+                    else if (data.water_weight >= water_full * 0.25 && data.water_weight < water_full * 0.75) {
+                        document.getElementById('water-desc').textContent = "Good";
+                        document.getElementById('water-desc').style.color = "black";
+                    }
+                    else if (data.water_weight >= water_full * 0.10 && data.water_weight < water_full * 0.25) {
+                        document.getElementById('water-desc').textContent = "Almost Empty";
+                        document.getElementById('water-desc').style.color = "#bf3131";
+                    }
+                    else if (data.water_weight < water_full * 0.10) {
+                        document.getElementById('water-desc').textContent = "Empty";
+                        document.getElementById('water-desc').style.color = "#bf3131";
+                    }
+                    
+                    if (data.feeds_weight >= feeds_full * 0.75) {
+                        document.getElementById('feeds-desc').textContent = "Full";
+                        document.getElementById('feeds-desc').style.color = "black";
+                    }
+                    else if (data.feeds_weight >= feeds_full * 0.25 && data.feeds_weight < feeds_full * 0.75) {
+                        document.getElementById('feeds-desc').textContent = "Good";
+                        document.getElementById('feeds-desc').style.color = "black";
+                    }
+                    else if (data.feeds_weight >= feeds_full * 0.10 && data.feeds_weight < feeds_full * 0.25) {
+                        document.getElementById('feeds-desc').textContent = "Almost Empty";
+                        document.getElementById('feeds-desc').style.color = "#bf3131";
+                    }
+                    else if (data.feeds_weight < feeds_full * 0.10) {
+                        document.getElementById('feeds-desc').textContent = "Empty";
+                        document.getElementById('feeds-desc').style.color = "#bf3131";
+                    }
+                } 
+                catch (error) {
+                    console.error("Error fetching sensor data:", error);
+                }
+            }
+            updateSensor();
+
+            // Update egg detection data
+            async function updateEggs() {
+                try {
+                    const response = await fetch('http://192.168.100.10/coop_pal/fetch_egg_data.php');
+                    const data = await response.json();
+
+                    // Update status
+                    if (data.eggs_detected == 0)
+                        document.getElementById('egg-id').textContent = "No egg detected";
+                    else if (data.eggs_detected == 1)
+                        document.getElementById('egg-id').textContent = "Egg detected";
+                } 
+                
+                catch (error) {
+                    console.error("Error fetching egg data:", error);
+                }
+            }
+            updateEggs();
+
+            // 'Auto/Manual' and 'Tools' toggle buttons interaction
+            document.addEventListener("DOMContentLoaded", function () {
+                const switch1 = document.getElementById("fan-toggle");
+                const switch2 = document.getElementById("led-toggle");
+                const autoMode = document.getElementById("auto");
+                const manualMode = document.getElementById("manual");
+
+                // Function to send the state to the PHP backend
+                async function setToolsState(state) {
+                    const data = new FormData();
+                    data.append("state", state);
+
+                    try {
+                        const response = await fetch("set_tools_state.php", {
+                            method: "POST",
+                            body: data,
+                        });
+                        const result = await response.json();
+
+                        if (result.status === "success") {
+                            console.log(result.message);
+                        } else {
+                            console.error("Error:", result.message);
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                    }
+                }
+
+                // Function to handle Switch changes
+                async function handleSwitchChange() {
+                    if (autoMode.checked) {
+                        switch1.checked = false;
+                        switch1.disabled = true;
+                        switch2.checked = false;
+                        switch2.disabled = true;
+                        // Auto mode
+                        setToolsState(1); 
+                    } else if (manualMode.checked) {
+                        switch1.disabled = false;
+                        switch2.disabled = false;
+                        
+                        // Copy of getActuatorStates() function
+                        try {
+                            const response = await fetch('http://192.168.100.10/coop_pal/get_actuator_states.php');
+                            const data = await response.json();
+
+                            const fanToggle = document.getElementById("fan-toggle");
+                            const ledToggle = document.getElementById("led-toggle");
+
+                            if (data.fan == 1) fanToggle.checked = true; else fanToggle.checked = false;
+                            if (data.led_bulb == 1) ledToggle.checked = true; else ledToggle.checked = false;
+                        } 
+                        catch (error) {
+                            console.error("Error fetching tools state (Auto/Manual):", error);
+                        }
+
+                        // Manual mode
+                        setToolsState(0);
+                    }
+                }
+
+                // Add event listeners to Switch
+                autoMode.addEventListener("change", handleSwitchChange);
+                manualMode.addEventListener("change", handleSwitchChange);
+            });
+            
+            // Get 'Auto/Manual' and actuators states once page loads
+            async function getToolsState() {
+                try {
+                    const response = await fetch('http://192.168.100.10/coop_pal/get_tools_state.php');
+                    const data = await response.json();
+
+                    // Content
+                    const switch1 = document.getElementById("fan-toggle");
+                    const switch2 = document.getElementById("led-toggle");
+                    const autoMode = document.getElementById("auto");
+                    const manualMode = document.getElementById("manual");
+
+                    if (data.isAuto == 1) {
+                        switch1.checked = false;
+                        switch1.disabled = true;
+                        switch2.checked = false;
+                        switch2.disabled = true;
+                        autoMode.checked = true;
+                        manualMode.checked = false;
+                    } else if (data.isAuto == 0) {
+                        switch1.disabled = false;
+                        switch2.disabled = false;
+                        autoMode.checked = false;
+                        manualMode.checked = true;
+                    }
+                } 
+                catch (error) {
+                    console.error("Error fetching tools state (Auto/Manual):", error);
+                }
+            }
+            async function getActuatorStates() {
+                try {
+                    const response = await fetch('http://192.168.100.10/coop_pal/get_actuator_states.php');
+                    const data = await response.json();
+
+                    const fanToggle = document.getElementById("fan-toggle");
+                    const ledToggle = document.getElementById("led-toggle");
+                    const manualMode = document.getElementById("manual");
+
+                    if (manualMode.checked == true) {
+                        if (data.fan == 1) fanToggle.checked = true; else fanToggle.checked = false;
+                        if (data.led_bulb == 1) ledToggle.checked = true; else ledToggle.checked = false;
+                    }
+                } 
+                catch (error) {
+                    console.error("Error fetching tools state (Auto/Manual):", error);
+                }
+            }
+            window.onload = function() {
+                getToolsState();
+                getActuatorStates();
+            }
+        
+            // Manual operation of actuators
+            document.addEventListener("DOMContentLoaded", function() {
+                const manualMode = document.getElementById("manual");
+                const fan = document.getElementById("fan-toggle");
+                const led = document.getElementById("led-toggle");
+
+                async function setActuatorStates(fan, led) {
+                    const data = new FormData();
+
+                    data.append("fan", fan);
+                    data.append("led", led);
+
+                    try {
+                        const response = await fetch("set_actuator_states.php", {
+                            method: "POST",
+                            body: data,
+                        });
+                        const result = await response.json();
+
+                        if (result.status === "success") {
+                            console.log(result.message);
+                        } else {
+                            console.error("Error:", result.message);
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                    }
+                }
+                
+                function manualToggle() {
+                    if (manualMode.checked) {
+                        const ledState = led.checked ? 1 : 0;
+                        const fanState = fan.checked ? 1 : 0;
+
+                        setActuatorStates(fanState, ledState);
+                    }
+                }
+                
+                fan.addEventListener("change", manualToggle);
+                led.addEventListener("change", manualToggle);
+            });
+        </script>
+    </body>
+</html>

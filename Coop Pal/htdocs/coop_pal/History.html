@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title> Coop Pal - Scan History </title>
+        <link rel = "icon" href="Graphics/Logo.png" type="image/png">
+    
+        <!-- CSS style -->
+        <style>
+            body { 
+                font-family: Arial, Helvetica, sans-serif; 
+                justify-content: center; 
+                align-items: center; 
+                background-color: #702c2c;
+            }
+
+            /* 'Coop Pal' logo and title */
+            .logo {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50px;
+                height: auto;
+            }
+            .title {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 100px;
+                height: auto;
+            }
+
+            /* Container */
+            .dashboard { 
+                background-color: #bf3131; 
+                color: white; 
+                padding: 20px; 
+                border-radius: 15px; 
+                width: 86%; 
+                margin-left: auto;
+                margin-right: auto;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            /* 'Back' button */
+            .button {
+            background-color: #a6a6a6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+            .button:hover {
+                background-color: #7c7a7a;
+            }
+
+            /* Table */
+            .table-container {
+                overflow-x: auto;
+                margin: 0 auto;
+                padding: 10px;
+            }
+            table {
+                border-collapse: collapse;
+                padding: 3px;
+                width: 100%;
+                text-align: center;
+            }
+            tr:hover td {
+                background-color: #702c2c;
+                color: white;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+            td {
+                background-color: whitesmoke;
+                border: 1px solid black;
+                color: black;
+                text-align: center;
+            }
+            th {
+                border: 1px solid black;
+                background-color: #702c2c;
+                color: white;
+            }
+            /* Media query for small screens */
+            @media (max-width: 768px) {
+                th, td {
+                    font-size: 12px;
+                    padding: 8px;
+                }
+                .dashboard {
+                    padding: 15px;
+                }
+                .button {
+                    font-size: 10px;
+                }
+                input[type="date"] {
+                    font-size: 10px;
+                }
+                label {
+                    font-size: 15px;
+                }       
+            }
+
+            /* Date picker */
+            .date-picker-container {
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                gap: 5px;
+            }
+            input[type="date"] {
+                padding: 10px;
+                font-size: 15px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            label {
+                font-size: 20px;
+                position: relative;
+                top: 10px;
+            }       
+
+            /* Bottom navigation bar */
+            .bottom-nav {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #bf3131;
+                display: grid;
+                place-items: center;
+                grid-auto-flow: column; 
+                gap: 2px;     
+                padding: 0px 0px;
+                border-radius: 50px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                z-index: 3;
+                width: 93%;
+            }
+            /* Unselected button icon */
+            .nav-button {
+                background-color: #bf3131;
+                padding: 10px;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                outline: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 8px;
+            }
+            /* Selected button icon */
+            .nav-button.center {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #faf7f0;
+                width: 70px;
+                height: 60px;
+                border-radius: 45%;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            /* Divider line between buttons */
+            .divider {
+                width: 1px;
+                height: 24px;
+                background-color: #faf7f0;
+                margin: 0 5px;
+            } 
+        </style>
+    </head>
+
+    <body>
+        <!-- 'Coop Pal' logo and title -->
+        <br> <img src = "Graphics/Logo.png" alt = "Coop Pal Logo" class = "logo">
+        <img src = "Graphics/Title - White.png" alt = "Coop Pal Title" class = "title">
+        <br> <br>
+
+        <!-- Container -->
+        <div class = "dashboard">
+            <!-- 'Back' button -->
+            <button class = "button" onclick = "window.location.href = 'Settings.html'"> <b> < Back </b> </button>
+
+            <h2 style = "text-align: center;"> Scan History </h2>
+
+            <!-- Date picker -->
+            <div class = "date-picker-container">
+                <label for = "date"> Date: </label>
+                <input type = "date" id = "date" name = "date">
+            </div>
+            <br>
+
+            <!-- Table -->
+            <div class = "table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style = "width: 80px"> Time </th>
+                            <th style = "width: 120px"> Temperature </th>
+                            <th style = "width: 90px"> Humidity </th>
+                            <th style = "width: 80px"> Daylight </th>
+                            <th style = "width: 100px"> Air Quality </th>
+                            <th style = "width: 65px"> Water Weight </th>
+                            <th style = "width: 65px"> Feeds Weight </th>
+                        </tr>
+                    </thead>
+                    <tbody id = "tableBody"> </tbody>
+                </table>
+            </div>
+            <div id = "results"> </div>
+
+            <br>
+            <!-- 'Back' button -->
+            <button class = "button" onclick = "window.location.href = 'Settings.html'"> <b> < Back </b> </button>
+            <br>
+         </div>
+        
+        <br> <br> <br> <br> <br> <br>
+        <!-- Navigation Bar -->
+        <div class = "bottom-nav">
+            <button class = "nav-button" onclick = "window.location.href = 'Info Page.html'">
+                <img src = "Graphics/Navigation Bar/Info - White.png" alt = "More Information" class = "status-logo" width = "60px">
+            </button>
+            <div class = "divider"></div>
+            <button class = "nav-button" onclick = "window.location.href = 'index.html'">
+                <img src = "Graphics/Navigation Bar/Home - White.png" alt = "Home" class = "status-logo" width="60px">
+            </button>
+            <div class = "divider"></div>
+            <button class = "nav-button center" onclick = "window.location.href = 'Settings.html'">
+                <img src = "Graphics/Navigation Bar/Settings - Black.png" alt = "Settings" class = "status-logo" width="60px">
+            </button>
+        </div>
+    
+        <script>
+            // Function to fetch and display data
+            function fetchData(selectedDate) {
+                fetch('get_scan_history.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `selected_date=${encodeURIComponent(selectedDate)}`
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableBody = document.getElementById('tableBody');
+                        tableBody.innerHTML = '';
+                    
+                        if (data.status === 'success') {
+                            if (data.data.length > 0) {
+                                data.data.forEach(row => {
+                                    const tr = document.createElement('tr');
+                                
+                                    // Format the time to 12-hour format
+                                    const formattedTime = formatTime(row.time);
+                                
+                                   tr.innerHTML = `
+                                        <td>${formattedTime ?? 'N/A'}</td>
+                                        <td>${row.temperature ?? 'N/A'}</td>
+                                        <td>${row.humidity ?? 'N/A'}</td>
+                                        <td>${row.light ?? 'N/A'}</td>
+                                        <td>${row.air_quality ?? 'N/A'}</td>
+                                        <td>${row.water_weight ?? 'N/A'}</td>
+                                        <td>${row.feeds_weight ?? 'N/A'}</td>
+                                    `;
+                                    tableBody.appendChild(tr);
+                                });
+                            } else {
+                               alert('No data found for the selected date.');
+                            }
+                        } else {
+                            alert(`Error: ${data.message}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while fetching data.');
+                    });
+            }
+
+            // Function to format time
+            function formatTime(timeString) {
+                if (!timeString) return null;
+            
+                // Split time into hours, minutes, and seconds
+                const [hours, minutes] = timeString.split(':');
+                const intHours = parseInt(hours, 10);
+            
+                // Determine AM/PM
+                const period = intHours >= 12 ? 'PM' : 'AM';
+            
+                // Convert hours to 12-hour format
+                const formattedHours = intHours % 12 || 12;
+            
+                return `${formattedHours}:${minutes} ${period}`;
+            }
+
+            // Event listener for date picker change
+            document.getElementById('date').addEventListener('change', function () {
+                const selectedDate = this.value;
+                fetchData(selectedDate);
+            });
+
+            // Load today's data by default
+            document.addEventListener('DOMContentLoaded', () => {
+                // Get today's date
+                const today = new Date();
+                const formattedDate = today.toISOString().split('T')[0];
+
+                // Set the date picker value to today's date
+                const datePicker = document.getElementById('date');
+                datePicker.value = formattedDate;
+
+                // Fetch data for today's date by default
+                fetchData(formattedDate);
+            });
+        </script>
+    </body>
+</html>

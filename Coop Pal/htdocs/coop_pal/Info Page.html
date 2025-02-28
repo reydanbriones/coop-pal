@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title> Coop Pal - More Info </title>
+        <link rel = "icon" href="Graphics/Logo.png" type="image/png">
+
+        <!-- CSS design -->
+        <style>
+            body { 
+                font-family: Arial, Helvetica, sans-serif; 
+                justify-content: center; 
+                align-items: center; 
+                background-color: #702c2c;
+            }
+            /* 'Coop Pal' logo and title */
+            .logo {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50px;
+                height: auto;
+            }
+            .title {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 100px;
+                height: auto;
+            }
+
+            /* Container */
+            .dashboard { 
+                background-color: #bf3131; 
+                color: white; 
+                padding: 20px; 
+                border-radius: 15px; 
+                width: 86%; 
+                margin-left: auto;
+                margin-right: auto;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            /* Bottom navigation bar */
+            .bottom-nav {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #bf3131;
+                display: grid;
+                place-items: center;
+                grid-auto-flow: column; 
+                gap: 2px;     
+                padding: 0px 0px;
+                border-radius: 50px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                z-index: 3;
+                width: 93%;
+            }
+            /* Unselected button icon */
+            .nav-button {
+                background-color: #bf3131;
+                padding: 10px;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                outline: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 8px;
+            }
+            /* Selected button icon */
+            .nav-button.center {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #faf7f0;
+                width: 70px;
+                height: 60px;
+                border-radius: 45%;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            /* Divider line between buttons */
+            .divider {
+                width: 1px;
+                height: 24px;
+                background-color: #faf7f0;
+                margin: 0 5px;
+            }
+
+            /* Profile picture */
+            .circle-image {
+                width: 100px;           
+                height: 100px;          
+                border-radius: 50%;    
+                object-fit: cover;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            }
+            /* Side-by-side photos */
+            .photo-grid { 
+                flex: 1; 
+                color: white; 
+                padding: 10px; 
+                border-radius: 5px; 
+                margin-bottom: 10px; 
+                display: flex; 
+                justify-content: center;
+                align-items: center;
+                gap: 50px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <!-- 'Coop Pal' logo and title -->
+        <br> <img src = "Graphics/Logo.png" alt = "Coop Pal Logo" class = "logo">
+        <img src = "Graphics/Title - White.png" alt = "Coop Pal Title" class = "title">
+        <br> <br>
+
+        <!-- 'About the App' container -->
+        <div class = "dashboard">
+            <h3> About the App </h3>
+            <p>
+                <b> Coop Pal </b> is designed to assist poultry farmers in remotely monitoring and managing their chickens. By combining modern technology with
+                traditional farming practices, the app enhances the coop environment and boosts productivity in daily operations.
+            </p>
+        </div> <br>
+
+        <!-- 'Key Features' container -->
+        <div class = "dashboard">
+            <h3> Key Features </h3>
+            <p>
+                <b> Real-Time Monitoring: </b> Track essential environmental factors such as temperature, humidity, light levels, air quality, feed weight, and water 
+                levels to ensure optimal conditions for raising chickens.
+            </p>
+            <p>
+                <b> Egg Detection: </b> Powered by AI, check if an egg is present inside the coop.
+            </p>
+            <p>
+                <b> Device Control: </b> Remotely control key devices like fan and lighting from your smartphone, ensuring the perfect environment 
+                anytime, anywhere.
+            </p>
+            <p>
+                <b> Live Surveillance: </b> Access a live video feed to monitor your coop in real-time, no matter where you are.
+            </p>
+        </div> <br>
+
+        <!-- 'About Us' container -->
+        <div class = "dashboard">
+            <h3> About Us </h3>
+            <div class = "photo-grid">
+                <div>
+                    <img src = "Graphics/About Us/Yangyang.png" alt = "Neil Francis Yangyang" class = "circle-image">
+                    <br> <br> 
+                    <b> Yangyang </b>
+                    <p> Neil Francis </p>
+                </div>
+                <div>
+                    <img src = "Graphics/About Us/Briones.png" alt = "Reydan Briones Jr." class = "circle-image">
+                    <br> <br> 
+                    <b> Briones </b>
+                    <p> Reydan Jr. </p>
+                </div>
+            </div>
+            <p>
+                This undergraduate thesis project is developed by <b> Neil Francis Yangyang </b> and <b>Reydan Briones Jr.</b>, students of Bachelor 
+                of Science in Computer Engineering at Technological University of the Philippines Visayas. 
+                
+                <p> As part of a research project on sustainable poultry farming, 
+                the system integrates IoT and AI to advance traditional farming methods and enhance productivity. </p>
+            </p>
+        </div>
+        
+        <br> <br> <br> <br> <br> <br>
+
+        <!-- Navigation Bar -->
+        <div class = "bottom-nav">
+            <button class = "nav-button center">
+                <img src = "Graphics/Navigation Bar/Info - Black.png" alt = "More Information" class = "status-logo" width = "60px">
+            </button>
+            <div class = "divider"></div>
+            <button class = "nav-button" onclick = "window.location.href = 'index.html'">
+                <img src = "Graphics/Navigation Bar/Home - White.png" alt = "Home" class = "status-logo" width="60px">
+            </button>
+            <div class = "divider"></div>
+            <button class = "nav-button" onclick = "window.location.href = 'Settings.html'">
+                <img src = "Graphics/Navigation Bar/Settings - White.png" alt = "Settings" class = "status-logo" width="60px">
+            </button>
+        </div>
+    </body>
+</html>

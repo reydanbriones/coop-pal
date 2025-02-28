@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset = "UTF-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+        <title> Coop Pal - Camera </title>
+        <link rel = "icon" href="Graphics/Logo.png" type="image/png">
+
+        <!-- CSS design -->
+        <style>
+            body { 
+                font-family: Arial, Helvetica, sans-serif; 
+                justify-content: center; 
+                align-items: center; 
+                background-color: #702c2c;
+            }
+            /* 'Coop Pal' logo and title */
+            .logo {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 50px;
+                height: auto;
+            }
+            .title {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 100px;
+                height: auto;
+            }
+
+            /* 'Camera' container */
+            .dashboard { 
+                background-color: #bf3131; 
+                color: white; 
+                padding: 20px; 
+                border-radius: 15px; 
+                width: 86%; 
+                margin-left: auto;
+                margin-right: auto;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            /* 'Back' button */
+            .button {
+            background-color: #a6a6a6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            
+            }
+            .button:hover {
+                background-color: #7c7a7a;
+            }
+
+            /* Bottom navigation bar */
+            .bottom-nav {
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #bf3131;
+                display: grid;
+                place-items: center;
+                grid-auto-flow: column; 
+                gap: 2px;     
+                padding: 0px 0px;
+                border-radius: 50px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+                z-index: 3;
+                width: 93%;
+            }
+            /* Unselected button icon */
+            .nav-button {
+                background-color: #bf3131;
+                padding: 10px;
+                border: none;
+                border-radius: 50%;
+                cursor: pointer;
+                outline: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 8px;
+            }
+            /* Selected button icon */
+            .nav-button.center {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #faf7f0;
+                width: 70px;
+                height: 60px;
+                border-radius: 45%;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            }
+            /* Divider line between buttons */
+            .divider {
+                width: 1px;
+                height: 24px;
+                background-color: #faf7f0;
+                margin: 0 5px;
+            }
+        </style>
+
+        <body>
+            <!-- 'Coop Pal' logo and title -->
+            <br> <img src = "Graphics/Logo.png" alt = "Coop Pal Logo" class = "logo">
+            <img src = "Graphics/Title - White.png" alt = "Coop Pal Title" class = "title">
+            <br> <br>
+
+            <!-- 'Camera' container -->
+            <div class = "dashboard">
+                <h2 style = "text-align: center;"> Camera View </h2>
+
+                <!-- Needs calibration; Enter correct IP address -->
+                <img id = "liveStream" width = "300" height = "200" style = "border-radius: 15px; text-align: center;" src = "http://192.168.100.123:81/stream" alt = "Live Stream">
+
+                <!--
+                <video width = "300" height = "200" controls style = "border-radius: 15px; text-align: center;">
+                    <source src="http://192.168.100.123:81/stream" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video> 
+                -->
+                
+                <br> <br>
+
+                <!-- 'Back' button -->
+                <button class = "button" onclick = "window.location.href = 'index.html'"> <b> < Back </b> </button>
+                <br>
+            </div>
+            <br> <br> <br> <br> <br> <br>
+            <br> <br> <br> <br> <br> <br>
+            <br> <br> <br> <br> <br> <br>
+
+            <!-- Navigation Bar -->
+            <div class = "bottom-nav">
+            <button class = "nav-button" onclick = "window.location.href = 'Info Page.html'">
+                <img src = "Graphics/Navigation Bar/Info - White.png" alt = "More Information" class = "status-logo" width = "60px">
+            </button>
+            <div class = "divider"></div>
+            <button class = "nav-button center" onclick = "window.location.href = 'index.html'">
+                <img src = "Graphics/Navigation Bar/Home - Black.png" alt = "Home" class = "status-logo" width="60px">
+            </button>
+            <div class = "divider"></div>
+            <button class = "nav-button" onclick = "window.location.href = 'Settings.html'">
+                <img src = "Graphics/Navigation Bar/Settings - White.png" alt = "Settings" class = "status-logo" width="60px">
+            </button>
+        </div>
+        </body>
+    </head>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Sensor Data Submission</title>
+</head>
+<body>
+    <h1>Test Sensor Data Submission</h1>
+    <form id="sensorDataForm">
+        <label for="ldr_value">LDR Value:</label>
+        <input type="text" id="ldr_value" name="ldr_value"><br><br>
+
+        <label for="temperature">Temperature:</label>
+        <input type="text" id="temperature" name="temperature"><br><br>
+
+        <label for="humidity">Humidity:</label>
+        <input type="text" id="humidity" name="humidity"><br><br>
+
+        <label for="mq9">MQ9:</label>
+        <input type="text" id="mq9" name="mq9"><br><br>
+
+        <label for="mq135">MQ135:</label>
+        <input type="text" id="mq135" name="mq135"><br><br>
+
+        <label for="egg_range">Egg Range:</label>
+        <input type="text" id="egg_range" name="egg_range"><br><br>
+
+        <label for="water_weight">Water Weight:</label>
+        <input type="text" id="water_weight" name="water_weight"><br><br>
+
+        <label for="feeds_weight">Feeds Weight:</label>
+        <input type="text" id="feeds_weight" name="feeds_weight"><br><br>
+
+        <button type="button" onclick="submitData()">Submit</button>
+    </form>
+
+    <div id="response"></div>
+
+    <script>
+        function submitData() {
+            const form = document.getElementById('sensorDataForm');
+            const formData = new FormData(form);
+
+            fetch('set_sensor_data.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerHTML = JSON.stringify(data);
+            })
+            .catch(error => {
+                document.getElementById('response').innerHTML = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>

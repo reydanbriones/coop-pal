@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+    <meta charset = "UTF-8">
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+    <title> Egg Detection </title>
+    <link rel = "icon" href="Graphics/Logo.png" type="image/png">
+
+    <style>
+        body { 
+            font-family: Arial, Helvetica, sans-serif; 
+            justify-content: center; 
+            align-items: center; 
+            background-color: #702c2c;
+        }
+        /* 'Coop Pal' logo and title */
+        .logo {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50px;
+            height: auto;
+        }
+        .title {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100px;
+            height: auto;
+        }
+
+        /* Container */
+        .dashboard { 
+            background-color: #bf3131; 
+            color: white; 
+            padding: 20px; 
+            border-radius: 15px; 
+            width: 86%; 
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .status_box_grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(1, 1fr);
+            place-items: center;
+        }
+
+        /* 'Detect' button */
+        .detect {
+            background-color: #702c2c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 150px;
+        }
+        .detect:hover {
+            background-color: white;
+            color: #702c2c;
+        }
+
+        /* Bottom navigation bar */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #bf3131;
+            display: grid;
+            place-items: center;
+            grid-auto-flow: column; 
+            gap: 2px;     
+            padding: 0px 0px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 3;
+            width: 93%;
+        }
+        /* Unselected button icon */
+        .nav-button {
+            background-color: #bf3131;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 8px;
+        }
+        /* Selected button icon */
+        .nav-button.center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #faf7f0;
+            width: 70px;
+            height: 60px;
+            border-radius: 45%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        /* Divider line between buttons */
+        .divider {
+            width: 1px;
+            height: 24px;
+            background-color: #faf7f0;
+            margin: 0 5px;
+        }
+
+        #outputImage {
+            display: none;
+            max-width: 100vw;
+            max-height: 80vh;
+            width: auto;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 'Coop Pal' logo and title -->
+    <br> <img src = "Graphics/Logo.png" alt = "Coop Pal Logo" class = "logo">
+    <img src = "Graphics/Title - White.png" alt = "Coop Pal Title" class = "title">
+    <br> <br>
+    
+    <!-- Container -->
+    <div class = "dashboard">
+        <div class = "status_box_grid">
+            <h2 style = "text-align: center;"> Egg Detection AI </h2>
+            <br>
+    
+            <button class = "detect" onclick = "analyzeImage()"> Detect </button>
+            <h3 id = "result" style = "text-align: center;"> </h3>
+            <img id = "outputImage" src = "" alt = "" style = "display:none; max-width: 100%;">
+            <br> <br>
+        </div>
+    </div>
+
+    <br> <br> <br> <br> <br> <br>
+
+    <!-- Navigation Bar -->
+    <div class = "bottom-nav">
+        <button class = "nav-button" onclick = "window.location.href = 'Info Page.html'">
+            <img src = "Graphics/Navigation Bar/Info - White.png" alt = "More Information" class = "status-logo" width = "60px">
+        </button>
+        <div class = "divider"></div>
+        <button class = "nav-button center" onclick = "window.location.href = 'index.html'">
+            <img src = "Graphics/Navigation Bar/Home - Black.png" alt = "Home" class = "status-logo" width="60px">
+        </button>
+        <div class = "divider"></div>
+        <button class = "nav-button" onclick = "window.location.href = 'Settings.html'">
+            <img src = "Graphics/Navigation Bar/Settings - White.png" alt = "Settings" class = "status-logo" width="60px">
+        </button>
+    </div>
+
+    <script>
+        function analyzeImage() {
+            fetch("http://127.0.0.1:8000/analyze")
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById("result").innerText = "Error: " + data.error;
+                } else {
+                    document.getElementById("result").innerText = "Eggs Detected: " + data.num_eggs;
+                    let img = document.getElementById("outputImage");
+                    img.src = "http://127.0.0.1:8000" + data.image_url;
+                    img.style.display = "block";
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
